@@ -24,16 +24,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# 安装 Python 依赖（使用清华镜像加速）
+# 安装 Python 依赖
 COPY requirements.txt .
-RUN pip install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple --timeout 120 -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# 安装 Chromium 系统依赖
-RUN python -m playwright install-deps chromium
-
-# 安装 Playwright Chromium（默认官方 CDN，带重试）
-RUN for i in $(seq 1 5); do python -m playwright install chromium && break; \
-    echo "第 $i 次重试下载 Chromium..."; sleep 5; done
+# 安装 Playwright Chromium
+RUN python -m playwright install chromium
 
 # 创建非 root 用户
 RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
@@ -41,6 +37,6 @@ USER appuser
 
 COPY . .
 
-EXPOSE 5000
+EXPOSE 8004
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000", "--workers", "4"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8004", "--workers", "4"]
