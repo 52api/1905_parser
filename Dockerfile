@@ -24,11 +24,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# 安装 Python 依赖
+# 安装 Python 依赖（使用清华镜像加速）
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple --timeout 120 -r requirements.txt
 
-# 安装 Playwright Chromium
+# 安装 Playwright Chromium（使用国内镜像）
+ENV PLAYWRIGHT_DOWNLOAD_HOST=https://npmmirror.com/playwright
 RUN python -m playwright install chromium
 
 # 创建非 root 用户
