@@ -263,4 +263,7 @@ curl -X POST http://localhost:5000/api/video \
 <div align="center">
   <p>基于 Playwright + Chromium 的 1905 视频解析服务</p>
   <p>部署指南详见 <a href="DEPLOY_BAOTA.md"><b>DEPLOY_BAOTA.md</b></a></p>
+  <br>
+  <p>本项目由 <a href="https://www.52api.cn"><b>我爱API平台</b></a> 提供</p>
+  <p>官方 QQ 群：<code>1072499758</code></p>
 </div>
